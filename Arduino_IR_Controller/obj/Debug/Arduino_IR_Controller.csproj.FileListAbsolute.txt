@@ -1,0 +1,7 @@
+C:\Users\pablo\source\repos\Arduino_IR_Controller\Arduino_IR_Controller\bin\Debug\Arduino_IR_Controller.exe.config
+C:\Users\pablo\source\repos\Arduino_IR_Controller\Arduino_IR_Controller\bin\Debug\Arduino_IR_Controller.exe
+C:\Users\pablo\source\repos\Arduino_IR_Controller\Arduino_IR_Controller\bin\Debug\Arduino_IR_Controller.pdb
+C:\Users\pablo\source\repos\Arduino_IR_Controller\Arduino_IR_Controller\obj\Debug\Arduino_IR_Controller.csproj.CoreCompileInputs.cache
+C:\Users\pablo\source\repos\Arduino_IR_Controller\Arduino_IR_Controller\obj\Debug\Arduino_IR_Controller.exe
+C:\Users\pablo\source\repos\Arduino_IR_Controller\Arduino_IR_Controller\obj\Debug\Arduino_IR_Controller.pdb
+C:\Users\pablo\source\repos\Arduino_IR_Controller\Arduino_IR_Controller\obj\Debug\Arduino_IR_Controller.csprojAssemblyReference.cache
