@@ -5,9 +5,9 @@ using System.Runtime.InteropServices;
  * Virtual keys code
  * https://docs.microsoft.com/es-es/windows/desktop/inputdev/virtual-key-codes
  **/
-namespace Arduino_IR_Controller
+namespace IrPcController
 {
-    class MediaController
+    internal class MediaController
     {
 
         private Logger logger;

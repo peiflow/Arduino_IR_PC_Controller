@@ -1,6 +1,6 @@
 ﻿using NLog;
 
-namespace Arduino_IR_Controller
+namespace IrPcController
 {
     class Program
     {

@@ -1,38 +1,43 @@
 ﻿using System.IO.Ports;
-using System.Diagnostics;
 using System.IO;
 using System;
 using NLog;
 
-namespace Arduino_IR_Controller
+namespace IrPcController
 {
-    public class Controller
+    internal class Controller
     {
-        private SerialPort _arduinoPort;
+        const string PORT = "COM3";
+
         private MediaController _mediaController;
+        private SerialPort _serialPort;
+
         private Logger _logger;
 
         public Controller()
         {
             _logger = LogManager.GetCurrentClassLogger();
-            _arduinoPort = new SerialPort();
-            _arduinoPort.PortName = "COM3";
-            _arduinoPort.BaudRate = 9600;
             _mediaController = new MediaController();
+            _serialPort = new SerialPort(PORT);
+            _serialPort.BaudRate = 9600;
         }
 
         public void ReadData()
         {
+            _logger.Debug("Starting " + nameof(ReadData));
             try
             {
-                _logger.Debug("Starting " + nameof(ReadData));
-                _arduinoPort.Open();
-                while (_arduinoPort.IsOpen)
+                _serialPort.Open();
+
+                if (_serialPort.IsOpen)
+                    Console.WriteLine($"Port {PORT} open");
+
+                while (_serialPort.IsOpen)
                 {
-                    _arduinoPort.ReadLine();
-                    var cmd = _arduinoPort.ReadLine();
-                    cmd = cmd.Replace("\r", string.Empty).Replace("\n", string.Empty);
-                    switch (cmd)
+                    var s = _serialPort.ReadLine();
+                    s = s.Replace("\r", string.Empty).Replace("\n", string.Empty);
+                    Console.WriteLine(s);
+                    switch (s)
                     {
                         case "+":
                             _mediaController.VolumeUp();
@@ -65,24 +70,41 @@ namespace Arduino_IR_Controller
                             _mediaController.FullscreenVideoWeb();
                             break;
                         case "0":
-                            var processInfo = new ProcessStartInfo("cmd.exe", "/C " + "shutdown -h");
-                            processInfo.CreateNoWindow = true;
-                            processInfo.UseShellExecute = false;
-                            Process.Start(processInfo);
-                            _logger.Debug("End of " + nameof(ReadData) + ": Shutting down pc");
+                            // ProcessStartInfo ProcessInfo;
+                            // Process Process;
+                            // ProcessInfo = new ProcessStartInfo("cmd.exe", "/C " + "shutdown -h");
+                            // ProcessInfo.CreateNoWindow = true;
+                            // ProcessInfo.UseShellExecute = false;
+                            // Process = Process.Start(ProcessInfo);
                             break;
                     }
                 }
             }
             catch (IOException ex)
             {
+                _serialPort.Close();
+                Console.WriteLine(ex);
+                _logger.Error(nameof(ReadData) + " ended with: " + ex);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                _serialPort.Close();
+                Console.WriteLine(ex);
+                _logger.Error(nameof(ReadData) + " ended with: " + ex);
+            }
+            catch (Exception ex)
+            {
+                _serialPort.Close();
+                Console.WriteLine(ex);
                 _logger.Error(nameof(ReadData) + " ended with: " + ex);
             }
             finally
             {
-                _arduinoPort.Close();
-                _logger.Error(nameof(ReadData) + " close COM port");
+                _serialPort.Close();
+                if (!_serialPort.IsOpen)
+                    Console.WriteLine($"Port {PORT} closed");
             }
         }
     }
 }
+
