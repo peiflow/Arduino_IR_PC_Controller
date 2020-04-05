@@ -9,7 +9,6 @@ namespace IrPcController
 {
     internal class MediaController
     {
-
         private Logger logger;
 
         private readonly int VK_SPACE = 0x20;
@@ -78,23 +77,9 @@ namespace IrPcController
             keybd_event((byte)VK_MEDIA_PLAY_PAUSE, 0, KEYEVENTF_KEYUP | 0, 0);
             logger.Debug(nameof(PlayPauseTrack) + " end");
         }
-        public void StopTrack()
-        {
-            logger.Debug(nameof(StopTrack) + " start");
-            keybd_event((byte)VK_MEDIA_STOP, 0, KEYEVENTF_EXTENDEDKEY | 0, 0);
-            keybd_event((byte)VK_MEDIA_STOP, 0, KEYEVENTF_KEYUP | 0, 0);
-            logger.Debug(nameof(StopTrack) + " end");
-        }
         #endregion
 
         #region Web
-        public void PauseWeb()
-        {
-            logger.Debug(nameof(PauseWeb) + " start");
-            keybd_event((byte)VK_SPACE, 0, KEYEVENTF_EXTENDEDKEY | 0, 0);
-            keybd_event((byte)VK_SPACE, 0, KEYEVENTF_KEYUP | 0, 0);
-            logger.Debug(nameof(PauseWeb) + " end");
-        }
         public void NextVideoWeb()
         {
             logger.Debug(nameof(NextVideoWeb) + " start");
@@ -120,12 +105,6 @@ namespace IrPcController
             keybd_event((byte)VK_F_KEY, 0, KEYEVENTF_KEYUP | 0, 0);
             logger.Debug(nameof(FullscreenVideoWeb) + " end");
         }
-        /*
-            Space is pause/play
-            Shift-N is next track (or backspace)
-            Shift-P is previous track
-            F is fullcreen/resize
-         */
         #endregion
     }
 }

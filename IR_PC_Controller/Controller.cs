@@ -2,6 +2,8 @@
 using System.IO;
 using System;
 using NLog;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace IrPcController
 {
@@ -34,48 +36,64 @@ namespace IrPcController
 
                 while (_serialPort.IsOpen)
                 {
-                    var s = _serialPort.ReadLine();
-                    s = s.Replace("\r", string.Empty).Replace("\n", string.Empty);
-                    Console.WriteLine(s);
-                    switch (s)
+                    var inline = _serialPort.ReadLine();
+                    inline = inline.Replace("\r", string.Empty).Replace("\n", string.Empty);
+
+                    int intInline;
+                    _ = int.TryParse(inline, out intInline);
+                    var hexVal = intInline.ToString("X", CultureInfo.InvariantCulture);
+
+                    Console.WriteLine(hexVal);
+
+                    switch (hexVal)
                     {
-                        case "+":
+                        case "FFA857": // +
                             _mediaController.VolumeUp();
                             break;
-                        case "-":
+                        case "FFE01F": // -
                             _mediaController.VolumeDown();
                             break;
-                        case "EQ":
+                        case "FF906F": // EQ
                             _mediaController.VolumeMute();
                             break;
-                        case ">|":
+                        case "FFC23D": // >|
                             _mediaController.PlayPauseTrack();
                             break;
-                        case ">>|":
+                        case "FF02FD": // >>|
                             _mediaController.NextTrack();
                             break;
-                        case "|<<":
+                        case "FF22DD": // |<<
                             _mediaController.PreviousTrack();
                             break;
-                        case "CH":
-                            _mediaController.PauseWeb();
-                            break;
-                        case "CH+":
+                        case "FFE21D": // CH+
                             _mediaController.NextVideoWeb();
                             break;
-                        case "CH-":
+                        case "FFA25D": // CH-
                             _mediaController.PreviousVideoWeb();
                             break;
-                        case "200+":
+                        case "FFB04F": //200+
                             _mediaController.FullscreenVideoWeb();
                             break;
-                        case "0":
-                            // ProcessStartInfo ProcessInfo;
-                            // Process Process;
-                            // ProcessInfo = new ProcessStartInfo("cmd.exe", "/C " + "shutdown -h");
-                            // ProcessInfo.CreateNoWindow = true;
-                            // ProcessInfo.UseShellExecute = false;
-                            // Process = Process.Start(ProcessInfo);
+                        case "FF6897":
+                            _serialPort.Close();
+                            var processInfo = new ProcessStartInfo("cmd.exe", "/C " + "shutdown -h");
+                            processInfo.CreateNoWindow = true;
+                            processInfo.UseShellExecute = false;
+                            Process.Start(processInfo);
+                            _logger.Debug("Shutting down PC");
+                            break;
+                        case "0xFF9867": // 100+
+                        case "FF629D": // CH
+                        case "FF30CF": // 1
+                        case "FF18E7": // 2
+                        case "FF7A85": // 3
+                        case "FF10EF": // 4
+                        case "FF38C7": // 5
+                        case "FF5AA5": // 6
+                        case "FF42BD": // 7
+                        case "FF4AB5": // 8
+                        case "FF52AD": // 9
+                            Console.WriteLine("Not assinged");
                             break;
                     }
                 }
