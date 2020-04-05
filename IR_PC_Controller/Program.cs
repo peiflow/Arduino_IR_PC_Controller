@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using NLog;
 
 namespace Arduino_IR_Controller
 {
@@ -12,6 +6,9 @@ namespace Arduino_IR_Controller
     {
         static void Main(string[] args)
         {
+            var logger = LogManager.GetCurrentClassLogger();
+            logger.Debug("Program started");
+
             Controller controller = new Controller();
             controller.ReadData();
         }
