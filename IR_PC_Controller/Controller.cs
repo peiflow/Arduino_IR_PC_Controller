@@ -32,7 +32,7 @@ namespace IrPcController
                 _serialPort.Open();
 
                 if (_serialPort.IsOpen)
-                    Console.WriteLine($"Port {PORT} open");
+                    Console.WriteLine($"Port {PORT} open", Console.ForegroundColor = ConsoleColor.Blue);
 
                 while (_serialPort.IsOpen)
                 {
@@ -43,7 +43,7 @@ namespace IrPcController
                     _ = int.TryParse(inline, out intInline);
                     var hexVal = intInline.ToString("X", CultureInfo.InvariantCulture);
 
-                    Console.WriteLine(hexVal);
+                    Console.WriteLine(hexVal, Console.ForegroundColor = ConsoleColor.Yellow);
 
                     switch (hexVal)
                     {
@@ -101,19 +101,19 @@ namespace IrPcController
             catch (IOException ex)
             {
                 _serialPort.Close();
-                Console.WriteLine(ex);
+                Console.WriteLine(ex.ToString(), Console.ForegroundColor = ConsoleColor.Red);
                 _logger.Error(nameof(ReadData) + " ended with: " + ex);
             }
             catch (UnauthorizedAccessException ex)
             {
                 _serialPort.Close();
-                Console.WriteLine(ex);
+                Console.WriteLine(ex.ToString(), Console.ForegroundColor = ConsoleColor.Red);
                 _logger.Error(nameof(ReadData) + " ended with: " + ex);
             }
             catch (Exception ex)
             {
                 _serialPort.Close();
-                Console.WriteLine(ex);
+                Console.WriteLine(ex.ToString(), Console.ForegroundColor = ConsoleColor.Red);
                 _logger.Error(nameof(ReadData) + " ended with: " + ex);
             }
             finally
@@ -121,6 +121,7 @@ namespace IrPcController
                 _serialPort.Close();
                 if (!_serialPort.IsOpen)
                     Console.WriteLine($"Port {PORT} closed");
+                Console.ReadKey();
             }
         }
     }
