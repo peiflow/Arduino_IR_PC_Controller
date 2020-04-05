@@ -14,48 +14,39 @@ namespace Arduino_IR_Controller
 {
     class MediaController
     {
-        const int VK_SPACE = 0x20;
-        const int VK_LWIN = 0x5B;
-        const int VK_SHIFT = 0x10;
-        const int VK_P_KEY = 0x50;
-        const int VK_N_KEY = 0x4E;
-        const int VK_F_KEY = 0x46;
-        const int VK_MEDIA_NEXT_TRACK = 0xB0;
-        const int VK_MEDIA_PREV_TRACK = 0xB1;
-        const int VK_MEDIA_STOP = 0xB2;
-        const int VK_MEDIA_PLAY_PAUSE = 0xB3;
-        const int VK_VOLUME_MUTE = 0xAD;
-        const int VK_VOLUME_DOWN = 0xAE;
-        const int VK_VOLUME_UP = 0xAF;
-
-        const uint KEYEVENTF_KEYUP = 0x0002;
-        const uint KEYEVENTF_EXTENDEDKEY = 0x0001;
-        
-
-        ProcessManagement processManagement;
-
-        public MediaController()
-        {
-            processManagement = new ProcessManagement();
-        }
+        private readonly int VK_SPACE = 0x20;
+        private readonly int VK_LWIN = 0x5B;
+        private readonly int VK_SHIFT = 0x10;
+        private readonly int VK_P_KEY = 0x50;
+        private readonly int VK_N_KEY = 0x4E;
+        private readonly int VK_F_KEY = 0x46;
+        private readonly int VK_MEDIA_NEXT_TRACK = 0xB0;
+        private readonly int VK_MEDIA_PREV_TRACK = 0xB1;
+        private readonly int VK_MEDIA_STOP = 0xB2;
+        private readonly int VK_MEDIA_PLAY_PAUSE = 0xB3;
+        private readonly int VK_VOLUME_MUTE = 0xAD;
+        private readonly int VK_VOLUME_DOWN = 0xAE;
+        private readonly int VK_VOLUME_UP = 0xAF;
+        private readonly uint KEYEVENTF_KEYUP = 0x0002;
+        private readonly uint KEYEVENTF_EXTENDEDKEY = 0x0001;
 
         [DllImport("user32.dll")]
         public static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, uint dwExtraInfo);
         #region Media
         public void VolumeUp()
         {
-            keybd_event((byte)VK_VOLUME_UP, 0, KEYEVENTF_EXTENDEDKEY | 0,0);
-            keybd_event((byte)VK_VOLUME_UP, 0, KEYEVENTF_KEYUP | 0,0);
+            keybd_event((byte)VK_VOLUME_UP, 0, KEYEVENTF_EXTENDEDKEY | 0, 0);
+            keybd_event((byte)VK_VOLUME_UP, 0, KEYEVENTF_KEYUP | 0, 0);
         }
         public void VolumeDown()
         {
-            keybd_event((byte)VK_VOLUME_DOWN, 0, KEYEVENTF_EXTENDEDKEY | 0,0);
-            keybd_event((byte)VK_VOLUME_DOWN, 0, KEYEVENTF_KEYUP | 0,0);
+            keybd_event((byte)VK_VOLUME_DOWN, 0, KEYEVENTF_EXTENDEDKEY | 0, 0);
+            keybd_event((byte)VK_VOLUME_DOWN, 0, KEYEVENTF_KEYUP | 0, 0);
         }
         public void VolumeMute()
         {
-            keybd_event((byte)VK_VOLUME_MUTE, 0, KEYEVENTF_EXTENDEDKEY | 0,0);
-            keybd_event((byte)VK_VOLUME_MUTE, 0, KEYEVENTF_KEYUP | 0,0);
+            keybd_event((byte)VK_VOLUME_MUTE, 0, KEYEVENTF_EXTENDEDKEY | 0, 0);
+            keybd_event((byte)VK_VOLUME_MUTE, 0, KEYEVENTF_KEYUP | 0, 0);
         }
         public void PreviousTrack()
         {
@@ -82,13 +73,11 @@ namespace Arduino_IR_Controller
         #region Web
         public void PauseWeb()
         {
-            //processManagement.ActivateProcess();
             keybd_event((byte)VK_SPACE, 0, KEYEVENTF_EXTENDEDKEY | 0, 0);
             keybd_event((byte)VK_SPACE, 0, KEYEVENTF_KEYUP | 0, 0);
         }
         public void NextVideoWeb()
         {
-            //processManagement.ActivateProcess();
             keybd_event((byte)VK_SHIFT, 0, KEYEVENTF_EXTENDEDKEY | 0, 0);
             keybd_event((byte)VK_N_KEY, 0, KEYEVENTF_EXTENDEDKEY | 0, 0);
             keybd_event((byte)VK_N_KEY, 0, KEYEVENTF_KEYUP | 0, 0);
@@ -96,7 +85,6 @@ namespace Arduino_IR_Controller
         }
         public void PreviousVideoWeb()
         {
-            //processManagement.ActivateProcess();
             keybd_event((byte)VK_SHIFT, 0, KEYEVENTF_EXTENDEDKEY | 0, 0);
             keybd_event((byte)VK_P_KEY, 0, KEYEVENTF_EXTENDEDKEY | 0, 0);
             keybd_event((byte)VK_P_KEY, 0, KEYEVENTF_KEYUP | 0, 0);
@@ -104,7 +92,6 @@ namespace Arduino_IR_Controller
         }
         public void FullscreenVideoWeb()
         {
-            //processManagement.ActivateProcess();
             keybd_event((byte)VK_F_KEY, 0, KEYEVENTF_EXTENDEDKEY | 0, 0);
             keybd_event((byte)VK_F_KEY, 0, KEYEVENTF_KEYUP | 0, 0);
         }
