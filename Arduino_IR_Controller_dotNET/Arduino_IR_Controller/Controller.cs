@@ -2,77 +2,81 @@
 using System.Diagnostics;
 using System.IO;
 using System;
+using NLog;
 
 namespace Arduino_IR_Controller
 {
     public class Controller
     {
-        private SerialPort arduinoPort;
-        private MediaController mediaController;
+        private SerialPort _arduinoPort;
+        private MediaController _mediaController;
+        private Logger _logger;
 
         public Controller()
         {
-            arduinoPort = new SerialPort();
-            arduinoPort.PortName = "COM3";
-            arduinoPort.BaudRate = 9600;
-            mediaController = new MediaController();
+            _logger = LogManager.GetCurrentClassLogger();
+            _arduinoPort = new SerialPort();
+            _arduinoPort.PortName = "COM3";
+            _arduinoPort.BaudRate = 9600;
+            _mediaController = new MediaController();
         }
 
         public void ReadData()
         {
             try
             {
-                arduinoPort.Open();
-                while (arduinoPort.IsOpen)
+                _logger.Debug("Starting " + nameof(ReadData));
+                _arduinoPort.Open();
+                while (_arduinoPort.IsOpen)
                 {
-                    arduinoPort.ReadLine();
-                    var cmd = arduinoPort.ReadLine();
+                    _arduinoPort.ReadLine();
+                    var cmd = _arduinoPort.ReadLine();
                     cmd = cmd.Replace("\r", string.Empty).Replace("\n", string.Empty);
                     switch (cmd)
                     {
                         case "+":
-                            mediaController.VolumeUp();
+                            _mediaController.VolumeUp();
                             break;
                         case "-":
-                            mediaController.VolumeDown();
+                            _mediaController.VolumeDown();
                             break;
                         case "EQ":
-                            mediaController.VolumeMute();
+                            _mediaController.VolumeMute();
                             break;
                         case ">|":
-                            mediaController.PlayPauseTrack();
+                            _mediaController.PlayPauseTrack();
                             break;
                         case ">>|":
-                            mediaController.NextTrack();
+                            _mediaController.NextTrack();
                             break;
                         case "|<<":
-                            mediaController.PreviousTrack();
+                            _mediaController.PreviousTrack();
                             break;
                         case "CH":
-                            mediaController.PauseWeb();
+                            _mediaController.PauseWeb();
                             break;
                         case "CH+":
-                            mediaController.NextVideoWeb();
+                            _mediaController.NextVideoWeb();
                             break;
                         case "CH-":
-                            mediaController.PreviousVideoWeb();
+                            _mediaController.PreviousVideoWeb();
                             break;
                         case "200+":
-                            mediaController.FullscreenVideoWeb();
+                            _mediaController.FullscreenVideoWeb();
                             break;
                         case "0":
-                            ProcessStartInfo ProcessInfo;
-                            Process Process;
-                            ProcessInfo = new ProcessStartInfo("cmd.exe", "/C " + "shutdown -h");
-                            ProcessInfo.CreateNoWindow = true;
-                            ProcessInfo.UseShellExecute = false;
-                            Process = Process.Start(ProcessInfo);
+                            var processInfo = new ProcessStartInfo("cmd.exe", "/C " + "shutdown -h");
+                            processInfo.CreateNoWindow = true;
+                            processInfo.UseShellExecute = false;
+                            Process.Start(processInfo);
+                            _logger.Debug("End of " + nameof(ReadData) + ": Shutting down pc");
                             break;
                     }
                 }
             }
             catch (IOException ex)
             {
+                _logger.Error(nameof(ReadData) + " ended with: " + ex);
                 Console.WriteLine(ex);
             }
         }

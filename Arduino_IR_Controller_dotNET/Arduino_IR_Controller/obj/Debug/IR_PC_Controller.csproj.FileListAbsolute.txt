@@ -5,3 +5,7 @@ E:\sources\repos\Arduino_IR_PC_Controller\Arduino_IR_Controller_dotNET\Arduino_I
 E:\sources\repos\Arduino_IR_PC_Controller\Arduino_IR_Controller_dotNET\Arduino_IR_Controller\obj\Debug\IR_PC_Controller.csproj.CoreCompileInputs.cache
 E:\sources\repos\Arduino_IR_PC_Controller\Arduino_IR_Controller_dotNET\Arduino_IR_Controller\obj\Debug\IR_PC_Controller.exe
 E:\sources\repos\Arduino_IR_PC_Controller\Arduino_IR_Controller_dotNET\Arduino_IR_Controller\obj\Debug\IR_PC_Controller.pdb
+E:\sources\repos\Arduino_IR_PC_Controller\Arduino_IR_Controller_dotNET\Arduino_IR_Controller\bin\Debug\NLog.config
+E:\sources\repos\Arduino_IR_PC_Controller\Arduino_IR_Controller_dotNET\Arduino_IR_Controller\bin\Debug\NLog.dll
+E:\sources\repos\Arduino_IR_PC_Controller\Arduino_IR_Controller_dotNET\Arduino_IR_Controller\bin\Debug\NLog.xml
+E:\sources\repos\Arduino_IR_PC_Controller\Arduino_IR_Controller_dotNET\Arduino_IR_Controller\obj\Debug\IR_PC_Controller.csproj.CopyComplete
