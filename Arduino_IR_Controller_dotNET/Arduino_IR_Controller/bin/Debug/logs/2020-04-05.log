@@ -1,5 +1,0 @@
-2020-04-05 17:15:01.1733 ERROR ReadData ended with: System.IO.IOException: El puerto 'COM3' no existe.
-   en System.IO.Ports.InternalResources.WinIOError(Int32 errorCode, String str)
-   en System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean discardNull, Byte parityReplace)
-   en System.IO.Ports.SerialPort.Open()
-   en Arduino_IR_Controller.Controller.ReadData() en E:\sources\repos\Arduino_IR_PC_Controller\Arduino_IR_Controller_dotNET\Arduino_IR_Controller\Controller.cs:línea 28
